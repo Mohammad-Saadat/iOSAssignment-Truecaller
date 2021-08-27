@@ -31,5 +31,4 @@ ENABLE_BITCODE = NO
 // ============
 // MARK: - URLs
 // ============
-BASE_DOMAIN = https:$(FORWARD_SLASH)/api.spacexdata.com
-BASE_URL = $(BASE_DOMAIN)/v4
+BASE_URL = https:$(FORWARD_SLASH)/truecaller.blog

@@ -42,6 +42,22 @@ class CustomMoyaProvider<T: TargetType>: MoyaProvider<T> {
         }
     }
     
+    func requestData(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Promise<Data> {
+        return Promise { seal in
+            request(
+                target,
+                callbackQueue: callbackQueue,
+                progress: progress
+            ) { result in
+                do {
+                    seal.fulfill(try result.get().data)
+                } catch {
+                    seal.reject(error)
+                }
+            }
+        }
+    }
+    
     func request<T: Decodable>(_ target: Target, callbackQueue: DispatchQueue? = .none, progress: ProgressBlock? = .none) -> Promise<T> {
         return Promise { [jsonDecoder] seal in
             request(

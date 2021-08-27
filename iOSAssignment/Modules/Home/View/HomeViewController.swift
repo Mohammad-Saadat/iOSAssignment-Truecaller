@@ -8,7 +8,12 @@
 
 import UIKit
 
-protocol HomeDisplayLogic: class {}
+protocol HomeDisplayLogic: class {
+    func displayError(viewModel: Home.ErrorModel.ViewModel)
+    func showLoading()
+    func hideLoading(viewModel: Home.Loading.ViewModel)
+    func displayData(viewModel: Home.Data.ViewModel)
+}
 
 class HomeViewController: UIViewController {
     // MARK: - Object lifecycle
@@ -39,6 +44,9 @@ class HomeViewController: UIViewController {
     var router: (NSObjectProtocol & HomeRoutingLogic & HomeDataPassing)?
     
     // MARK: - Outlets
+    @IBOutlet var textViews: [UITextView]!
+    @IBOutlet var containerViews: [UIView]!
+    @IBOutlet weak var runButton: UIButton!
 }
 
 // MARK: - View Controller
@@ -47,8 +55,9 @@ class HomeViewController: UIViewController {
 extension HomeViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.title = "Home"
         factory.setup(viewController: self)
+        interactor?.fetchData()
     }
 }
 
@@ -58,11 +67,36 @@ extension HomeViewController {
 private extension HomeViewController {
 }
 
-// MARK: Public
-extension HomeViewController {}
-
 // MARK: - Display Logic
-extension HomeViewController: HomeDisplayLogic {}
+extension HomeViewController: HomeDisplayLogic {
+    func displayError(viewModel: Home.ErrorModel.ViewModel) {
+        let action = UIAlertAction.init(title: "OK", style: .cancel, handler: nil)
+        presentMessege(title: "Error",
+                       message: viewModel.error.localizedDescription,
+                       additionalActions: action,
+                       preferredStyle: .alert)
+    }
+    
+    func showLoading() {
+        runButton.showLoading()
+        containerViews.forEach { $0.showLoading() }
+    }
+    
+    func hideLoading(viewModel: Home.Loading.ViewModel) {
+        guard let containerView = containerViews.first( where: {$0.tag == viewModel.tag }) else { return }
+        containerView.hideLoading()
+        if viewModel.hideLoadingOnButton { runButton.hideLoading() }
+    }
+    
+    func displayData(viewModel: Home.Data.ViewModel) {
+        let textView = textViews.first { $0.tag == viewModel.tag }
+        textView?.text = viewModel.text
+    }
+}
 
 // MARK: - Actions
-extension HomeViewController {}
+extension HomeViewController {
+    @IBAction func runButtonTapped(_ sender: Any) {
+        interactor?.fetchData()
+    }
+}

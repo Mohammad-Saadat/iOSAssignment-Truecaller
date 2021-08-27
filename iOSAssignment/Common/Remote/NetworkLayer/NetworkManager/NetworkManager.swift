@@ -31,4 +31,10 @@ class NetworkManager: NetworkManagerProtocol {
         let response: Promise<Void> = self.moyaService.provider.request(moyaTarget)
         return response
     }
+    
+    func requestData<Request>(_ request: Request) -> Promise<Data> where Request: RequestProtocol {
+        let moyaTarget = MoyaTarget.init(mockFlashRequest: request)
+        let response: Promise<Data> = self.moyaService.provider.requestData(moyaTarget)
+        return response
+    }
 }

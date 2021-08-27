@@ -7,8 +7,13 @@
 //
 
 import UIKit
+import PromiseKit
 
-protocol HomeWorkerLogic {}
+protocol HomeWorkerLogic {
+    func getTenthChar() -> Promise<String?>
+    func getEveryTenthChar() -> Promise<String?>
+    func getWorlCounter() -> Promise<String?>
+}
 
 class HomeWorker {
     // MARK: - Object lifecycle
@@ -30,8 +35,17 @@ class HomeWorker {
 
 // MARK: - Methods
 
-// MARK: Private
-private extension HomeWorker {}
-
 // MARK: - Worker Logic
-extension HomeWorker: HomeWorkerLogic {}
+extension HomeWorker: HomeWorkerLogic {
+    func getTenthChar() -> Promise<String?> {
+        return service.getTenthChar()
+    }
+    
+    func getEveryTenthChar() -> Promise<String?> {
+        return service.getEveryTenthChar()
+    }
+    
+    func getWorlCounter() -> Promise<String?> {
+        return service.getWorlCounter()
+    }
+}

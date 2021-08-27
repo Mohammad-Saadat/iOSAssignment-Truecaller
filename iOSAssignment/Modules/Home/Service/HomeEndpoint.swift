@@ -9,30 +9,22 @@
 import Foundation
 
 enum HomeEndpoint {
-//    case something
+    case tenthChar
+    case everyTenthChar
+    case worlCounter
 }
 
 extension HomeEndpoint: RequestProtocol {
     
     public var relativePath: String {
-//        switch self {
-//        case .something: return "/"
-//        }
-        return "/"
+        return "/2018/03/15/how-to-become-an-ios-developer/"
     }
     
     public var method: HTTPMethod {
-//        switch self {
-//        case .something: return .get
-//        }
         return .get
     }
     
     public var requestType: RequestType {
-//        switch self {
-//        case .something:
-//            return .requestPlain
-//        }
         return .requestPlain
     }
     
@@ -41,6 +33,6 @@ extension HomeEndpoint: RequestProtocol {
     }
     
     var authorizationType: AuthType {
-        return .bearer
+        return .none
     }
 }

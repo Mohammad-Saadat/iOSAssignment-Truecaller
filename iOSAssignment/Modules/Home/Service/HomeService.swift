@@ -30,4 +30,25 @@ final class HomeService {
 // MARK: - Methods
 
 // MARK: Public
-extension HomeService {}
+extension HomeService {
+    func getTenthChar() -> Promise<String?> {
+        return networkManager
+            .requestData(HomeEndpoint.tenthChar)
+            .map { String(data: $0, encoding: .utf8) }
+            .recover(NetworkErrors.parseError)
+    }
+    
+    func getEveryTenthChar() -> Promise<String?> {
+        return networkManager
+            .requestData(HomeEndpoint.everyTenthChar)
+            .map { String(data: $0, encoding: .utf8) }
+            .recover(NetworkErrors.parseError)
+    }
+    
+    func getWorlCounter() -> Promise<String?> {
+        return networkManager
+            .requestData(HomeEndpoint.worlCounter)
+            .map { String(data: $0, encoding: .utf8) }
+            .recover(NetworkErrors.parseError)
+    }
+}

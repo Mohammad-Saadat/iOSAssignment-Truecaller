@@ -11,4 +11,5 @@ import PromiseKit
 protocol NetworkManagerProtocol {
     func request<Request: RequestProtocol, Response: Decodable>(_ request: Request) -> Promise<Response>
     func request<Request: RequestProtocol>(_ request: Request) -> Promise<Void>
+    func requestData<Request: RequestProtocol>(_ request: Request) -> Promise<Data>
 }

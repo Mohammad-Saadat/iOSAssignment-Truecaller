@@ -9,14 +9,34 @@
 import UIKit
 
 enum Home {
-    // MARK: Use cases
-    
-    enum Something {
-        struct Request {
-        }
+    enum ErrorModel {
         struct Response {
+            var error: Error
         }
         struct ViewModel {
+            var error: Error
+        }
+    }
+    
+    enum Loading {
+        struct Response {
+            let tag: Int
+            let hideLoadingOnButton: Bool
+        }
+        struct ViewModel {
+            let tag: Int
+            let hideLoadingOnButton: Bool
+        }
+    }
+    
+    enum Data {
+        struct Response {
+            let tag: Int
+            let text: String?
+        }
+        struct ViewModel {
+            let tag: Int
+            let text: String
         }
     }
 }
